@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evented by Ellie - Event Planning & Design Services</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            background: #fff;
+        }
+        
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: #ff69b4;
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-style: italic;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tagline {
+            color: #666;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .header-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        
+        .header-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Balloon decoration */
+        .balloons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 80px;
+        }
+        
+        .balloon {
+            position: absolute;
+            width: 25px;
+            height: 30px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+        
+        .balloon1 {
+            background: #ff69b4;
+            top: 0;
+            left: 0;
+            transform: rotate(-15deg);
+        }
+        
+        .balloon2 {
+            background: #ffd700;
+            top: 5px;
+            left: 20px;
+            transform: rotate(15deg);
+        }
+        
+        .balloon3 {
+            background: #dda0dd;
+            top: 10px;
+            left: 10px;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 2.5rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #ff69b4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Service Cards */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .service-card {
+            background: #fafafa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(255,105,180,0.2);
+        }
+        
+        .service-header {
+            background: #ff69b4;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .service-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .service-header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        .service-body {
+            padding: 1.5rem;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        
+        .price-row:last-child {
+            border-bottom: none;
+        }
+        
+        .price-label {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .price-amount {
+            font-weight: 700;
+            color: #ff69b4;
+            font-size: 1.1rem;
+        }
+        
+        /* What's Included Section */
+        .included-section {
+            background: #fff5f9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .included-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .included-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .included-category h4 {
+            color: #ff69b4;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .included-list {
+            list-style: none;
+        }
+        
+        .included-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .included-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ff69b4;
+            font-weight: bold;
+        }
+        
+        /* Rental Grid */
+        .rental-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .rental-item {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .rental-item:hover {
+            border-color: #ff69b4;
+            transform: translateY(-3px);
+        }
+        
+        .rental-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .rental-price {
+            color: #ff69b4;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        /* Terms Box */
+        .terms-box {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .terms-box h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .terms-list {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .terms-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .terms-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #ff69b4;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #2c2c2c;
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ff69b4;
+        }
+        
+        .footer-text {
+            margin-bottom: 2rem;
+            color: #ccc;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .footer-cta {
+            display: inline-block;
+            background: #ff69b4;
+            color: white;
+            padding: 0.85rem 2.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-cta:hover {
+            background: #ff1493;
+        }
+        
+        .footer-info {
+            font-size: 0.85rem;
+            color: #999;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 2rem 1rem;
+            }
+            
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media print {
+            .container {
+                box-shadow: none;
+            }
+            
+            .footer-cta {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="balloons">
+                <div class="balloon balloon1"></div>
+                <div class="balloon balloon2"></div>
+                <div class="balloon balloon3"></div>
+            </div>
+            <h1 class="logo">Evented by Ellie</h1>
+            <p class="tagline">AFFORDABLE EVENT PLANNING & DESIGN</p>
+            <div class="header-info">
+                <span>📍 Oklahoma City, OK</span>
+                <span>🎉 Black-Owned Business</span>
+                <span>💝 Making Dreams Affordable</span>
+            </div>
+        </header>
+
+        <!-- Parties Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Parties & Special Events</h2>
+                <p class="section-subtitle">Birthday parties, baby showers, corporate events & more!</p>
+            </div>
+            
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3>Small Events</h3>
+                        <p>Up to 50 guests • 3 hours</p>
+                    </div>
+                    <div class="service-body">
+                        <div class="price-row">
+                            <span class="price-label">Decorating Only</span>
+                            <span class="price-amount">$100</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Planning Only</span>
+                            <span class="price-amount">$100</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Decorating & Planning</span>
+                            <span class="price-amount">$200</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3>Large Events</h3>
+                        <p>50-100 guests • 3 hours</p>
+                    </div>
+                    <div class="service-body">
+                        <div class="price-row">
+                            <span class="price-label">Decorating Only</span>
+                            <span class="price-amount">$250</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Planning Only</span>
+                            <span class="price-amount">$250</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Decorating & Planning</span>
+                            <span class="price-amount">$500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="included-section">
+                <h3 class="included-title">What's Included in Each Service</h3>
+                <div class="included-grid">
+                    <div class="included-category">
+                        <h4>🎨 Decorating Services Include:</h4>
+                        <ul class="included-list">
+                            <li>Theme design consultation</li>
+                            <li>Complete setup before event</li>
+                            <li>Affordable Decoration Sourcing</li>
+                            <li>Complete Design Plan Curation</li>
+                            <li>1 DIY Included</li>
+                        </ul>
+                    </div>
+                    <div class="included-category">
+                        <h4>📋 Planning Services Include:</h4>
+                        <ul class="included-list">
+                            <li>Vendor research & coordination</li>
+                            <li>Timeline creation & management</li>
+                            <li>Guest list & RSVP tracking</li>
+                            <li>Budget planning assistance</li>
+                            <li>Start to finish coordination</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weddings Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Wedding Services</h2>
+                <p class="section-subtitle">Your dream wedding doesn't have to break the bank!</p>
+            </div>
+            
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3>Wedding Planning</h3>
+                        <p>Various packages available</p>
+                    </div>
+                    <div class="service-body">
+                        <div class="price-row">
+                            <span class="price-label">Day of Support (4 hrs)</span>
+                            <span class="price-amount">$300</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Day of Support (8 hrs)</span>
+                            <span class="price-amount">$600</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Month of Coordination</span>
+                            <span class="price-amount">$500</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Year of Coordination</span>
+                            <span class="price-amount">$1,800</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3>Wedding Extras</h3>
+                        <p>Additional services</p>
+                    </div>
+                    <div class="service-body">
+                        <div class="price-row">
+                            <span class="price-label">Decorating Services</span>
+                            <span class="price-amount">$400</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Budget Planning Guide</span>
+                            <span class="price-amount">$200</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label" style="font-size: 0.85rem;">Includes templates + 1hr consultation</span>
+                            <span class="price-amount"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rentals Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Event Rentals</h2>
+                <p class="section-subtitle">Everything you need to make your event special</p>
+            </div>
+            
+            <div class="rental-grid">
+                <div class="rental-item">
+                    <div class="rental-name">Movie Night Package</div>
+                    <div class="rental-price">Projector & Screen</div>
+                </div>
+                <div class="rental-item">
+                    <div class="rental-name">Karaoke Machine</div>
+                    <div class="rental-price">Professional System</div>
+                </div>
+                <div class="rental-item">
+                    <div class="rental-name">Party Strobe Lights</div>
+                    <div class="rental-price">Set of 3</div>
+                </div>
+                <div class="rental-item">
+                    <div class="rental-name">Flower Arch</div>
+                    <div class="rental-price">Various Styles</div>
+                </div>
+                <div class="rental-item">
+                    <div class="rental-name">Candles & Vases</div>
+                    <div class="rental-price">Per Table</div>
+                </div>
+                <div class="rental-item">
+                    <div class="rental-name">Tablecloths</div>
+                    <div class="rental-price">Various Colors</div>
+                </div>
+            </div>
+            
+            <div class="terms-box">
+                <h4>Rental Information:</h4>
+                <ul class="terms-list">
+                    <li>Decor Rentals: Cost based on item + delivery fee</li>
+                    <li>Decor Rentals + Setup: Item cost + delivery + $75 setup fee</li>
+                    <li>Delivery available within 30 miles of Oklahoma City</li>
+                    <li>Custom packages available for all rental combinations</li>
+                    <li>Contact us for specific pricing on rental items</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <h3 class="footer-title">Let's Create Your Perfect Event!</h3>
+            <p class="footer-text">
+                At Evented by Ellie, we believe everyone deserves a beautiful celebration. 
+                Our affordable packages and flexible payment options make it easy to bring your vision to life.
+            </p>
+            <a href="#" class="footer-cta">Get Your Free Quote Today</a>
+            <div class="footer-info">
+                <p>📞 (405) 215-2593 | 📧 eventedbyellie@gmail.com</p>
+                <p style="margin-top: 0.5rem;">Payment plans available • 25% deposit secures your date • Licensed & Insured</p>
+                <p style="margin-top: 1rem; font-size: 0.8rem;">© 2025 Evented by Ellie | Proudly serving Oklahoma City and surrounding areas</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
